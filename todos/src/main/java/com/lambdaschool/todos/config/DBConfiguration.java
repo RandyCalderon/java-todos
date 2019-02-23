@@ -14,7 +14,7 @@ public class DBConfiguration
     {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("org.sqlite.JDBC");
-        dataSourceBuilder.url("jdbc:sqlite:snackbar.db");
+        dataSourceBuilder.url("jdbc:sqlite:todos.db");
         return dataSourceBuilder.build();
     }
 }

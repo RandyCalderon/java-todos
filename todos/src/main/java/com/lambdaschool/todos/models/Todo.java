@@ -18,7 +18,7 @@ public class Todo {
     @Column(nullable = false)
     private String description;
 
-    private Date dateStarted;
+    private Date datestarted;
 
     private boolean completed;
 
