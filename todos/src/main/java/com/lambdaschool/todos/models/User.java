@@ -15,6 +15,7 @@ public class User {
     @Column(nullable = false)
     private long userid;
 
+    @Column(nullable = false)
     private String username;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="todo")
