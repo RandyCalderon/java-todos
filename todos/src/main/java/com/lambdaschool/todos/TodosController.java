@@ -5,6 +5,7 @@ import com.lambdaschool.todos.models.Todo;
 import com.lambdaschool.todos.models.User;
 import com.lambdaschool.todos.repository.TodoRepository;
 import com.lambdaschool.todos.repository.UserRepository;
+import io.swagger.annotations.*;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -14,7 +15,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
-
+@Api(value = "Todo Application", description = "A todo application for learning JAVA backend")
 @RestController
 @RequestMapping(path={}, produces = MediaType.APPLICATION_JSON_VALUE)
 public class TodosController {
@@ -24,6 +25,14 @@ public class TodosController {
 
     @Autowired
     UserRepository userrepos;
+
+    @ApiOperation(value = "List all todos", response = List.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved list"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resources you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message=  "The resource you were trying to reach can not be found")
+    })
 
     // Todo
 
