@@ -27,11 +27,14 @@ public class TodosController {
     UserRepository userrepos;
 
     // Todo
+
+    // All Todos
     @GetMapping("/todos")
     public List<Todo> allTodos() {
         return todorepos.findAll();
     }
 
+    // By Todoid
     @GetMapping("/todos/id/{id}")
     public Todo findTodoId(@PathVariable long id) {
         var foundTodo = todorepos.findById(id);
@@ -42,12 +45,21 @@ public class TodosController {
         }
     }
 
+    // By todos not completed
+    @GetMapping("/todos/active")
+    public List<Object[]> todoFalse() {
+        return todorepos.todoFalse();
+    }
+
     // User
+
+    // All Users
     @GetMapping("/users")
     public List<User> allUsers() {
         return userrepos.findAll();
     }
 
+    // By UserId
     @GetMapping("/users/id/{id}")
     public User findUserId(@PathVariable long id) {
         var foundUser = userrepos.findById(id);
@@ -57,4 +69,16 @@ public class TodosController {
             return null;
         }
     }
+
+    // By Username
+    @GetMapping("/users/username/{username}")
+    public User findByName(@PathVariable String name) {
+        var foundName = userrepos.findByName(name);
+        if(foundName != null) {
+            return foundName;
+        } else {
+            return null;
+        }
+    }
+
 }

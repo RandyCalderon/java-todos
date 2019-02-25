@@ -18,7 +18,7 @@ public class User {
     @Column(nullable = false)
     private String username;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="todo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
     @JsonIgnore
     private Set<Todo> todo;
 
