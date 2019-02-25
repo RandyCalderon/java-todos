@@ -8,12 +8,11 @@ import com.lambdaschool.todos.repository.UserRepository;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -51,6 +50,13 @@ public class TodosController {
         return todorepos.todoFalse();
     }
 
+    // Post new todo
+    @PostMapping("/todos")
+    public Todo newTodo(@RequestBody Todo todo) {
+        return todorepos.save(todo);
+    }
+
+
     // User
 
     // All Users
@@ -81,4 +87,34 @@ public class TodosController {
         }
     }
 
+    // Post new user
+    @PostMapping("/users")
+    public User newUser(@RequestBody User user) {
+        return userrepos.save(user);
+    }
+
+    // Update existing User
+    @PutMapping("/users/id/{id}")
+    public User changeUser(@RequestBody User newUser, @PathVariable long id) throws URISyntaxException {
+        Optional<User> updateUser = userrepos.findById(id);
+        if(updateUser.isPresent()) {
+            newUser.setUserid(id);
+            userrepos.save(newUser);
+            return newUser;
+        } else {
+            return null;
+        }
+    }
+
+    // Delete existing user
+    @DeleteMapping("/users/user/{userid}")
+    public User deleteUser(@PathVariable long id) {
+        var foundUser = userrepos.findById(id);
+        if(foundUser.isPresent()) {
+           userrepos.deleteById(id);
+           return foundUser.get();
+        } else {
+            return null;
+        }
+    }
 }
