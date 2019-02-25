@@ -34,9 +34,9 @@ public class TodosController {
     }
 
     // By Todoid
-    @GetMapping("/todos/id/{id}")
-    public Todo findTodoId(@PathVariable long id) {
-        var foundTodo = todorepos.findById(id);
+    @GetMapping("/todos/todo/{todoid}")
+    public Todo findTodoId(@PathVariable long todoid) {
+        var foundTodo = todorepos.findById(todoid);
         if(foundTodo.isPresent()) {
             return foundTodo.get();
         } else {
@@ -56,6 +56,17 @@ public class TodosController {
         return todorepos.save(todo);
     }
 
+    // Delete existing todo
+    @DeleteMapping("/todos/todoid/{todoid}")
+    public Todo deleteTodo(@PathVariable long todoid) {
+        var foundTodo = todorepos.findById(todoid);
+        if(foundTodo.isPresent()) {
+            todorepos.deleteById(todoid);
+            return foundTodo.get();
+        } else {
+            return null;
+        }
+    }
 
     // User
 
@@ -66,9 +77,9 @@ public class TodosController {
     }
 
     // By UserId
-    @GetMapping("/users/id/{id}")
-    public User findUserId(@PathVariable long id) {
-        var foundUser = userrepos.findById(id);
+    @GetMapping("/users/userid/{userid}")
+    public User findUserId(@PathVariable long userid) {
+        var foundUser = userrepos.findById(userid);
         if(foundUser.isPresent()) {
             return foundUser.get();
         } else {
@@ -78,8 +89,8 @@ public class TodosController {
 
     // By Username
     @GetMapping("/users/username/{username}")
-    public User findByName(@PathVariable String name) {
-        var foundName = userrepos.findByName(name);
+    public User findByName(@PathVariable String username) {
+        var foundName = userrepos.findByName(username);
         if(foundName != null) {
             return foundName;
         } else {
@@ -94,11 +105,11 @@ public class TodosController {
     }
 
     // Update existing User
-    @PutMapping("/users/id/{id}")
-    public User changeUser(@RequestBody User newUser, @PathVariable long id) throws URISyntaxException {
-        Optional<User> updateUser = userrepos.findById(id);
+    @PutMapping("/users/userid/{userid}")
+    public User changeUser(@RequestBody User newUser, @PathVariable long userid) throws URISyntaxException {
+        Optional<User> updateUser = userrepos.findById(userid);
         if(updateUser.isPresent()) {
-            newUser.setUserid(id);
+            newUser.setUserid(userid);
             userrepos.save(newUser);
             return newUser;
         } else {
@@ -107,11 +118,11 @@ public class TodosController {
     }
 
     // Delete existing user
-    @DeleteMapping("/users/user/{userid}")
-    public User deleteUser(@PathVariable long id) {
-        var foundUser = userrepos.findById(id);
+    @DeleteMapping("/users/id/{userid}")
+    public User deleteUser(@PathVariable long userid) {
+        var foundUser = userrepos.findById(userid);
         if(foundUser.isPresent()) {
-           userrepos.deleteById(id);
+           userrepos.deleteById(userid);
            return foundUser.get();
         } else {
             return null;
